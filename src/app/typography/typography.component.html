@@ -1,0 +1,131 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="header">
+            <div class="row">
+              <div class="col-md-8">
+                <h4 class="title">Categorias</h4>
+              </div>
+              <div class="col-md-4" style="text-align: right">
+                <button
+                  type="button"
+                  data-backdrop="false"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                  (click)="crearnuevo()"
+                  class="btn btn-dark"
+                >
+                  <i class="fas fa-plus"> </i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="content table-responsive table-full-width">
+            <table class="table table-hover">
+              <tbody>
+                <ng-container *ngFor="let item of categorias">
+                  <tr (click)="autor(item)">
+                    <td>{{ item.nombre_categoria }}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card" style="padding-top: 3rem">
+          <div class="col-md-12" style="margin-bottom: 1rem">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="autors.nombre_categoria"
+            />
+          </div>
+          <div class="col-md-12">
+            <textarea
+              name=""
+              class="form-control"
+              [(ngModel)]="autors.descripcion"
+              id=""
+            ></textarea>
+            <button
+              style="margin-top: 1rem; margin-bottom: 2rem"
+              type="button"
+              class="btn btn-success"
+              (click)="editar()"
+            >
+              Guardar
+            </button>
+            <button
+              style="margin-top: 1rem; margin-bottom: 2rem; margin-left: 1rem"
+              type="button"
+              class="btn btn-danger"
+              (click)="eliminar()"
+            >
+              Eliminar
+            </button>
+          </div>
+          <div class="content table-responsive table-full-width">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Titulo</th>
+                  <th>Autor</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of libros">
+                  <td>{{ item.titulo }}</td>
+                  <td>{{ item.nombre_autor }}</td>
+                  <td *ngIf="item.Estatus == 1">Disponible</td>
+                  <td *ngIf="item.Estatus == 2">No disponible</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Categoria</h5>
+      </div>
+      <div class="modal-body">
+        <label for="">Nombre Categoria</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="autorn.nombre_categoria"
+        />
+        <label for="">Descripción</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="autorn.descripcion"
+        />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" (click)="crearnuevo()" class="btn btn-primary">
+          Agregar Categoria
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

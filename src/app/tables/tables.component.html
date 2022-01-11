@@ -1,0 +1,219 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="header">
+            <div class="row">
+              <div class="col-md-8"><h4 class="title">Libros</h4></div>
+              <div style="text-align: right" class="col-md-4">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-backdrop="false"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                >
+                  Nuevo
+                </button>
+              </div>
+            </div>
+          </div>
+          
+            <div class="col-md-4">
+              <label for="">Buscar libro</label>
+              <input (keyup)="filtrar()" type="text" [(ngModel)]="search" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label for="">Filtrar por autor</label>
+              <select (change)="filtrar()" [(ngModel)]="autor" name="" id="" class="form-control">
+                <option value="0">Selecciona un autor</option>
+                <option *ngFor="let item of autores" [value]="item.id"> {{item.nombre_autor}} </option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="">Filtrar por Categoria</label>
+              <select (change)="filtrar()" [(ngModel)]="genero" name="" id="" class="form-control">
+                <option value="0">Selecciona una categoria</option>
+                <option *ngFor="let item of categorias" [value]="item.id"> {{item.nombre_categoria}} </option>
+              </select>
+            
+          </div>
+          <div class="content table-responsive table-full-width">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Titulo</th>
+                  <th>Autor</th>
+                  <th>Categoria</th>
+                  <th>Fecha publicación</th>
+                  <th>Estado</th>
+                  <th>Prestamo a</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of libros">
+                  <td>{{ item.titulo }}</td>
+                  <td>{{ item.nombre_autor }}</td>
+                  <td>{{ item.nombre_categoria }}</td>
+                  <td>{{ item.fecha_publicacion }}</td>
+                  <td>{{ item.Status }}</td>
+                  <td>{{ item.Prestado }}</td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-success"
+                      (click)="seleccionarlibro(item)"
+                      data-backdrop="false"
+                      data-toggle="modal"
+                      data-target="#editarmodal"
+                    >
+                      <i class="far fa-edit"></i>
+                    </button>
+                    <button
+                      (click)="eliminar(item)"
+                      type="button"
+                      class="btn btn-danger"
+                    >
+                      <i class="far fa-trash-alt"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nuevo libro</h5>
+      </div>
+      <div class="modal-body">
+        <label for="">Titulo libro</label>
+        <input type="text" class="form-control" [(ngModel)]="nlibro.titulo" />
+        <label for="">Autor</label>
+        <select
+          class="form-control"
+          name=""
+          [(ngModel)]="nlibro.id_autor"
+          id=""
+        >
+          <option value="">Selecciona un autor</option>
+          <option *ngFor="let item of autores" [value]="item.id">
+            {{ item.nombre_autor }}
+          </option>
+        </select>
+        <label for="">Categoria</label>
+        <select
+          class="form-control"
+          name=""
+          [(ngModel)]="nlibro.id_genero"
+          id=""
+        >
+          <option value="">Selecciona un genero</option>
+          <option *ngFor="let item of categorias" [value]="item.id">
+            {{ item.nombre_categoria }}
+          </option>
+        </select>
+        <label for="">Fecha de publicación</label>
+        <input
+          type="date"
+          name=""
+          class="form-control"
+          [(ngModel)]="nlibro.fecha_publicacion"
+          id=""
+        />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" (click)="crearlibron()" class="btn btn-primary">
+          Guardar libro
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="editarmodal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar libro</h5>
+      </div>
+      
+      <div class="modal-body">
+        <label for="">Titulo libro</label>
+        <input type="text" class="form-control" [(ngModel)]="mlibro.titulo" />
+        <label for="">Autor</label>
+        <select
+          class="form-control"
+          name=""
+          [(ngModel)]="mlibro.id_autor"
+          id=""
+        >
+          <option value="">Selecciona un autor</option>
+          <option *ngFor="let item of autores" [value]="item.id">
+            {{ item.nombre_autor }}
+          </option>
+        </select>
+        <label for="">Categoria</label>
+        <select
+          class="form-control"
+          name=""
+          [(ngModel)]="mlibro.id_genero"
+          id=""
+        >
+          <option value="">Selecciona un genero</option>
+          <option *ngFor="let item of categorias" [value]="item.id">
+            {{ item.nombre_categoria }}
+          </option>
+        </select>
+        <label for="">Fecha de publicación</label>
+        <input
+          type="date"
+          name=""
+          class="form-control"
+          [(ngModel)]="mlibro.fecha_publicacion"
+          id=""
+        />
+        <label for="">Estado</label>
+        <select class="form-control" name="" [(ngModel)]="mlibro.Estatus" id="">
+          <option value="1">Disponible</option>
+          <option value="2">Prestado</option>
+        </select>
+        <label *ngIf="mlibro.Estatus ==2" for="">Prestado a</label>
+        <input *ngIf="mlibro.Estatus ==2" type="text" class="form-control" name="" id="" [(ngModel)]="mlibro.Prestado">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" (click)="editarlib()" class="btn btn-primary">
+          Actualizar libro
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
